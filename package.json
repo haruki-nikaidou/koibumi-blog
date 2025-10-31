@@ -1,7 +1,7 @@
 {
   "name": "koibumi-astro-blog",
   "type": "module",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -24,7 +24,7 @@
     "@iconify-json/simple-icons": "^1.2.56",
     "@iconify/svelte": "^5.0.2",
     "@vercel/analytics": "^1.5.0",
-    "astro": "5.14.1",
+    "astro": "5.15.3",
     "astro-expressive-code": "^0.41.3",
     "astro-icon": "^1.1.5",
     "clsx": "^2.1.1",
