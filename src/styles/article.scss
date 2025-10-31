@@ -8,14 +8,25 @@ main {
 }
 
 article {
-
   width: 100%;
 
-  h1, h2, h3, h4, h5, h6, p,
-  ol, ul, blockquote, pre:has(code),
-  math
-  {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  ol,
+  ul,
+  blockquote,
+  pre:has(code),
+  math {
     margin-bottom: .75em;
+    margin-top: .75em;
+  }
+
+  &>*+* {
     margin-top: .75em;
   }
 
@@ -26,9 +37,8 @@ article {
   h5,
   h6,
   p {
-    font-family: Arial, Helvetica, sans-serif;
     box-sizing: border-box;
-    color: #1b1b17;
+    color: var(--color-foreground);
   }
 
   h1 {
@@ -38,17 +48,39 @@ article {
 
   h2 {
     font-size: 2rem;
-    font-weight: normal;
+    font-weight: bold;
+    border-bottom: solid;
+    border-bottom-width: medium;
+    border-bottom-color: var(--color-primary);
+
+    &::before {
+      content: '#';
+      color: var(--color-primary);
+      margin-right: .5rem;
+    }
   }
 
   h3 {
     font-size: 1.6rem;
-    font-weight: normal;
+    font-weight: bold;
+
+    &::before {
+      content: '##';
+      letter-spacing: -.2rem;
+      margin-right: .5rem;
+      color: var(--color-primary);
+    }
   }
 
   h4 {
     font-size: 1.35rem;
     font-weight: bold;
+
+    &::before {
+      content: '###';
+      letter-spacing: -.125rem;
+      margin-right: .375rem;
+    }
   }
 
   h5 {
@@ -68,19 +100,19 @@ article {
   }
 
   blockquote {
-    background-color: rgba(colors.$color-slate-50, 0.3);
+    background-color: color-mix(in srgb, var(--color-card), transparent 70%);
     backdrop-filter: blur(18px);
     padding: 1rem;
     border-radius: 6px 1rem 1rem 6px;
-    border-left: colors.$color-primary-500 6px solid;
-    box-shadow: 0.125rem 0.125rem 0.5rem rgba(colors.$color-slate-700, 0.2);
+    border-left: var(--color-primary) 6px solid;
+    box-shadow: 0.125rem 0.125rem 0.5rem color-mix(in srgb, var(--color-muted-foreground), transparent 80%);
   }
 
   pre:has(code) {
-    color: colors.$color-slate-50;
+    color: var(--color-code-fg);
     padding: 1rem 1rem 1rem 2.25rem;
     border-radius: .5rem;
-    background: colors.$color-slate-800;
+    background: var(--color-code-bg);
     overflow-x: auto;
 
     &::-webkit-scrollbar {
@@ -88,12 +120,12 @@ article {
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: colors.$color-primary-500;
+      background-color: var(--color-primary);
       border-radius: 5px;
     }
 
     &::-webkit-scrollbar-track {
-      background-color: colors.$color-slate-900;
+      background-color: var(--color-code-bg);
     }
 
     span:empty {
@@ -101,31 +133,31 @@ article {
     }
 
     code span {
-      color: colors.$color-slate-50;
-      font-family: 'Fira Code', monospace;
+      color: var(--color-code-fg);
+      font-family: 'JetBrains Mono', monospace;
     }
   }
 
-  code:not(:has( > span)) {
+  code:not(:has(> span)) {
     border-radius: .5rem;
     padding: 0.125rem 0.25rem;
-    background: colors.$color-slate-100;
-    color: colors.$color-slate-800;
+    background: var(--color-code-inline-bg);
+    color: var(--color-code-inline-fg);
   }
 
   code {
-    font-family: 'Fira Code', monospace;
+    font-family: 'JetBrains Mono', monospace;
   }
 
   a {
-    color: colors.$color-primary-500;
+    color: var(--color-primary);
     text-decoration: underline;
     text-underline-offset: 0.1em;
     cursor: pointer;
     transition: background-color 0.25s ease;
 
     &:hover {
-      background-color: colors.$color-primary-100;
+      background-color: color-mix(in srgb, var(--color-highlight), transparent 90%);
     }
   }
 
@@ -145,22 +177,23 @@ article {
     margin-bottom: 1rem;
     border-radius: 0.5rem;
     overflow: hidden;
-    box-shadow: 0 0 1rem rgba(colors.$color-slate-900, 0.1);
-    background: colors.$color-slate-50;
-    color: colors.$color-slate-800;
+    box-shadow: 0 0 1rem color-mix(in srgb, var(--color-muted-foreground), transparent 90%);
+    background: color-mix(in srgb, var(--color-card), transparent 30%);
+    color: var(--color-foreground);
 
-    th, td {
+    th,
+    td {
       padding: 0.5rem 1rem;
-      border-bottom: 1px solid colors.$color-slate-100;
+      border-bottom: 1px solid color-mix(in srgb, var(--color-muted-foreground), transparent 90%);
     }
 
     th {
-      background: colors.$color-primary-500;
-      color: colors.$color-slate-50;
+      background: var(--color-primary);
+      color: var(--color-background);
     }
 
     tr:nth-child(even) {
-      background: colors.$color-slate-100;
+      background: color-mix(in srgb, var(--color-highlight), transparent 95%);
     }
 
     tr {
@@ -168,11 +201,13 @@ article {
     }
 
     tr:hover {
-      background: colors.$color-slate-200;
+      background: color-mix(in srgb, var(--color-highlight), transparent 90%);
     }
   }
 
   img {
-    max-width: 100%;
+    max-width: min(100%, 40rem);
+    display: block;
+    margin: 1rem auto;
   }
 }

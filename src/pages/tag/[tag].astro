@@ -1,0 +1,51 @@
+---
+import RootLayout from '@/layouts/RootLayout.astro';
+import PostCard from '@/components/PostCard.astro';
+import siteConfig from '../../../content/site.json';
+import {getCollection} from 'astro:content';
+import Card from "../../components/Card.astro";
+
+const SITE_TITLE = siteConfig.title;
+const SITE_DESCRIPTION = siteConfig.description;
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  const tags = new Set(posts.flatMap((post) => post.data.tags));
+  return Array.from(tags).map((tag) => ({params: {tag}, props: {tag}}));
+}
+
+const {tag} = Astro.props;
+const posts = (await getCollection('blog'))
+    .filter((post) => post.data.tags.includes(tag) && !post.data.draft)
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<RootLayout title={`${tag} | Tags | ${SITE_TITLE}`} description={SITE_DESCRIPTION}>
+  <Card class="title-card">
+    <h2>Tag: {tag}</h2>
+  </Card>
+  <section class="posts">
+    {posts.map((post) => (
+        <PostCard {...post.data} slug={post.id}/>
+    ))}
+  </section>
+</RootLayout>
+
+<style>
+    .title-card {
+        margin-bottom: 2rem;
+    }
+
+    main {
+        max-width: 70rem;
+        width: 100%;
+        margin: 3rem auto;
+        padding: 0 1rem;
+    }
+
+    .posts {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1rem;
+    }
+</style>

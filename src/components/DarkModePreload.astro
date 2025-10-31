@@ -1,0 +1,28 @@
+---
+---
+
+<script is:inline>
+    const KEY = "\u{1090C}theme";
+    const isBrowser = typeof localStorage !== "undefined";
+    const getThemePreference = () => {
+        if (isBrowser && localStorage.getItem(KEY)) {
+            return localStorage.getItem(KEY);
+        }
+        return window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+    };
+    const isDark = getThemePreference() === "dark";
+    document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+
+    if (isBrowser) {
+        const observer = new MutationObserver(() => {
+            const isDark = document.documentElement.classList.contains("dark");
+            localStorage.setItem(KEY, isDark ? "dark" : "light");
+        });
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ["class"],
+        });
+    }
+</script>

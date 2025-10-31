@@ -1,37 +1,28 @@
 ---
-import BaseHead from '@/components/BaseHead.astro';
-import Header from '@/components/Header.astro';
-import Footer from '@/components/Footer.astro';
-import {SITE_TITLE, SITE_DESCRIPTION} from '@/consts';
+import RootLayout from '@/layouts/RootLayout.astro';
+import siteConfig from '../../../content/site.json';
 import {getCollection} from 'astro:content';
 import PostCard from "@/components/PostCard.astro";
 
+const SITE_TITLE = siteConfig.title;
+const SITE_DESCRIPTION = siteConfig.description;
+
 const posts = (await getCollection('blog'))
-    .filter(post => !post.data.notCompleted)
+    .filter(post => !post.data.draft)
     .sort(
         (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
     );
 ---
 
-<!doctype html>
-<html lang="en">
-<head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION}/>
-</head>
-<body>
-<Header/>
-<main>
+<RootLayout title={SITE_TITLE} description={SITE_DESCRIPTION} width="lg">
     <section>
         {
             posts.map((post) => (
-                    <PostCard {...post.data} slug={post.slug}/>
+                    <PostCard {...post.data} slug={post.id}/>
             ))
         }
     </section>
-</main>
-<Footer/>
-</body>
-</html>
+</RootLayout>
 
 <style>
     section {
@@ -39,7 +30,7 @@ const posts = (await getCollection('blog'))
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 1rem;
         max-width: 90rem;
-        margin: 5rem auto;
+        margin: 2rem auto;
         padding: 2rem;
     }
 </style>
