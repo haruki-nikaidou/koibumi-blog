@@ -2,7 +2,10 @@
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
 import '../styles/global.scss';
-import {FAVICON_SRC} from "../consts";
+import siteConfig from '../../content/site.json';
+import Analytics from '@vercel/analytics/astro'
+
+const FAVICON_SRC = siteConfig.favicon;
 
 interface Props {
 	title: string;
@@ -13,6 +16,14 @@ interface Props {
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
+
+import '@fontsource/comic-neue/300.css';
+import '@fontsource/comic-neue/400.css';
+import '@fontsource/comic-neue/700.css';
+import '@fontsource/klee-one/400.css';
+import '@fontsource/klee-one/600.css';
+import '@fontsource-variable/jetbrains-mono';
+import DarkModePreload from './DarkModePreload.astro';
 ---
 
 <!-- Global Metadata -->
@@ -43,3 +54,17 @@ const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+<!-- Analytics -->
+<Analytics/>
+
+<!-- Dark Mode Preload -->
+<DarkModePreload/>
+
+<!-- Katex -->
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"
+    integrity="sha256-GQlRJzV+1tKf4KY6awAMkTqJ9/GWO3Zd03Fel8mFLnU="
+    crossorigin="anonymous"
+/>

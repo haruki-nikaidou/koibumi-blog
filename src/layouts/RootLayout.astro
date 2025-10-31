@@ -1,0 +1,45 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  width?: 'lg' | 'md' | 'sm';
+}
+
+const { title, description, image, width = 'md' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} image={image} />
+  </head>
+  <body>
+    <Header />
+    <main class={width}>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style lang="scss">
+  main {
+    width: 100%;
+    margin: 0 auto;
+    padding: 1rem;
+    &.lg {
+      max-width: 90rem;
+    }
+    &.md {
+      max-width: 70rem;
+    }
+    &.sm {
+      max-width: 50rem;
+    }
+  }
+</style>

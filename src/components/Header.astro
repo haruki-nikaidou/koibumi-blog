@@ -1,16 +1,17 @@
 ---
 import HeaderLink from './HeaderLink.astro';
-import {GLOBAL_STYLE, SITE_TITLE} from '../consts';
+import siteConfig from '../../content/site.json';
 import "@/styles/components.scss";
 import {clsx} from "clsx";
+import ThemeToggle from './ThemeToggle.svelte';
+
+const SITE_TITLE = siteConfig.title;
 ---
 
 <header
     class={clsx(
         "head-container",
         'card',
-        GLOBAL_STYLE === 'glass' && 'glass',
-        GLOBAL_STYLE === 'lightGlass' && 'light-glass',
     )}
 >
   <nav>
@@ -22,7 +23,8 @@ import {clsx} from "clsx";
     <div class="internal-links">
       <HeaderLink href="/">Home</HeaderLink>
       <HeaderLink href="/blog">Blog</HeaderLink>
-      <HeaderLink href="https://github.com/koibumi-design/astro-blog">GitHub</HeaderLink>
+      <HeaderLink href="/tag">Tags</HeaderLink>
+      <ThemeToggle client:load/>
     </div>
   </nav>
 </header>

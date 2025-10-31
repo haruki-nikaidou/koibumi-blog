@@ -2,7 +2,6 @@
 import {clsx} from "clsx";
 interface Props extends HTMLAttributes<'div'> {
   darkMode?: boolean;
-  variant?: 'glass' | 'lightGlass' | 'quartz';
   shadow?: boolean;
   borderless?: boolean;
 }
@@ -11,7 +10,6 @@ import {type HTMLAttributes} from "astro/types";
 
 const {
   darkMode = false,
-  variant = 'quartz',
   shadow = true,
   borderless = false,
   ...props
@@ -24,8 +22,6 @@ const {
             props.class,
             'card',
             darkMode && 'dark-mode',
-            variant==='glass' && 'glass',
-            variant==='lightGlass' && 'light-glass',
             shadow || 'no-shadow',
             borderless && 'borderless'
         )

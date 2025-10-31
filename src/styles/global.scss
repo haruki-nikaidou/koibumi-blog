@@ -4,20 +4,36 @@
   padding: 0;
   margin: 0;
   outline: none;
-  font-family: Arial, Helvetica, sans-serif;
   box-sizing: border-box;
-  color: #1b1b17;
+}
+
+* {
+  color: var(--color-foreground);
 }
 
 body {
-  background-image: url('/bg.avif') , linear-gradient(to right, #ffcdb9, #FFC0CB) ;
+  background-image: linear-gradient(to right, #ffcdb9, #FFC0CB);
+  html.dark & {
+    background-image: linear-gradient(to right, #1b1b17, #2a2a27);
+  }
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url('/bg.avif');
+  html.dark & {
+    background-image: url('/bg-dark.avif');
+  }
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: fixed;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  z-index: -1;
 }
 
 main {
@@ -30,17 +46,32 @@ h3,
 h4,
 h5,
 h6,
-p {
-  font-family: Arial, Helvetica, sans-serif;
-  box-sizing: border-box;
-  color: #1b1b17;
+p,
+button,
+a,
+ul,
+ol,
+li,
+td,
+th
+{
+  font-family: 'Comic Neue', 'Klee One', sans-serif;
+  letter-spacing: .75px;
+  word-spacing: 1px;
+}
 
-  &.dark-mode {
-    color: #f8f8f6;
-  }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  box-sizing: border-box;
+  color: var(--color-foreground);
 
   &.emphasize {
-    color: colors.$color-primary-500;
+    color: var(--color-primary);
   }
 }
 

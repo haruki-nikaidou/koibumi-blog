@@ -1,6 +1,5 @@
 ---
 import Card from "./Card.astro";
-import {GLOBAL_STYLE} from "@/consts";
 import "@/styles/components.scss";
 import '@/styles/global.scss';
 
@@ -8,62 +7,95 @@ interface Props {
     slug: string
     heroImage?: string
     title: string
-    pubDate: Date
-    description?: string
+    pubDate: Date,
+    tags: string[]
+    updatedDate?: Date
 }
 
-const {slug, heroImage, title, pubDate, description} = Astro.props
+const {slug, heroImage, title, pubDate, updatedDate, tags} = Astro.props
 
 ---
 
 <Card
     class="post-card"
-    variant={GLOBAL_STYLE}
 >
     <a
         class='img-container'
         href={`/blog/${slug}`}
     >
-        {
-            heroImage === undefined ?
-                (
-                    <h4 class="emphasize">
-                        {title}
-                    </h4>
-                )
-                : <img src={heroImage} alt={title} loading="lazy"/>
-        }
+        {heroImage && <img src={heroImage} alt={title} loading="lazy"/>}
     </a>
     <h4>
         <a class="link" href={`/blog/${slug}`}>
             {title}
         </a>
     </h4>
-    <p>
-        {description}
-    </p>
-    <p class="date">
-        {pubDate.toLocaleDateString()}
-    </p>
+    <div class="tag-list">
+        {tags.map((tag) => (
+            <a class="tag" href={`/tag/${tag}`}>{tag}</a>
+        ))}
+    </div>
+    <div class="date-container">
+        <p class="date">
+            {updatedDate && "Published at "}{pubDate.toLocaleDateString()}
+        </p>
+        {
+            updatedDate && (
+                <p class="date">
+                    Updated at: {updatedDate.toLocaleDateString()}
+                </p>
+            )
+        }
+    </div>
 </Card>
 
 <style lang="scss">
     @use "../styles/colors.scss";
 
     .post-card {
-        padding-bottom: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+        justify-content: space-between;
+        *:not(:last-child) {
+            margin: 0;
+        }
+    
+        padding-bottom: .5rem;
 
         & > h4 {
             margin-top: 1rem;
         }
+
+        a {
+            text-decoration: none;
+        }
     }
 
-    .date {
-        text-align: right;
-        position: absolute;
-        font-size: 0.875rem;
-        bottom: 0.875rem;
-        right: 0.875rem;
+    .date-container {
+        .date {
+            color: var(--color-muted-foreground);
+            font-size: 0.875rem;
+        }
+    }
+
+    .tag-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+        margin: 0;
+
+        .tag {
+            padding: 0.125rem 0.5rem;
+            border-radius: 5rem;
+            background-color: color-mix(in srgb, var(--color-card), transparent 30%);
+            color: var(--color-muted-foreground);
+            font-size: 0.75rem;
+            margin-right: 0.25rem;
+            margin-bottom: 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.25s ease-in-out;
+        }
     }
 
     .img-container {
@@ -79,22 +111,10 @@ const {slug, heroImage, title, pubDate, description} = Astro.props
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
-
-        & > * {
             transition: transform 0.3s ease-in-out;
-        }
-
-        & > *:hover {
-            transform: scale(1.2);
-        }
-
-        &:has(h4) {
-            background-color: rgba(colors.$color-slate-100, 0.5);
-        }
-
-        h4 {
-            wrap-option: wrap;
+            &:hover {
+                transform: scale(1.2);
+            }
         }
     }
 </style>

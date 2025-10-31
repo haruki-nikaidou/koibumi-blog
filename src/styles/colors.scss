@@ -1,57 +1,39 @@
-@use 'sass:color';
-
-$color-primary: #c60f6a;
-$color-primary-50: #fae9ee;
-$color-primary-30: color.adjust($color-primary-50, $lightness:2%);
-$color-primary-100: color.adjust($color-primary-50, $lightness:-5%);
-$color-primary-200: color.adjust($color-primary-100, $lightness:-10%);
-$color-primary-300: color.adjust($color-primary-200, $lightness:-10%);
-$color-primary-400: color.adjust($color-primary-300, $lightness:-10%);
-$color-primary-500: color.adjust($color-primary-400, $lightness:-10%);
-$color-primary-600: color.adjust($color-primary-500, $lightness:-10%);
-$color-primary-700: color.adjust($color-primary-600, $lightness:-10%);
-$color-primary-800: color.adjust($color-primary-700, $lightness:-10%);
-$color-primary-900: color.adjust($color-primary-800, $lightness:-10%);
-$color-primary-950: color.adjust($color-primary-900, $lightness:-5%);
-
-$color-slate-50: #f3f3f1;
-$color-slate-30: color.adjust($color-slate-50, $lightness:2%);
-$color-slate-100: color.adjust($color-slate-50, $lightness:-5%);
-$color-slate-200: color.adjust($color-slate-100, $lightness:-10%);
-$color-slate-300: color.adjust($color-slate-200, $lightness:-10%);
-$color-slate-400: color.adjust($color-slate-300, $lightness:-10%);
-$color-slate-500: color.adjust($color-slate-400, $lightness:-10%);
-$color-slate-600: color.adjust($color-slate-500, $lightness:-10%);
-$color-slate-700: color.adjust($color-slate-600, $lightness:-10%);
-$color-slate-800: color.adjust($color-slate-700, $lightness:-10%);
-$color-slate-900: color.adjust($color-slate-800, $lightness:-10%);
-$color-slate-950: color.adjust($color-slate-900, $lightness:-5%);
+// CSS variables for color palette
+// Light mode colors are defined on :root
+// Dark mode colors are defined on html.dark
 
 :root {
-  --color-primary: $color-primary;
-  --color-primary-50: $color-primary-50;
-  --color-primary-30: $color-primary-30;
-  --color-primary-100: $color-primary-100;
-  --color-primary-200: $color-primary-200;
-  --color-primary-300: $color-primary-300;
-  --color-primary-400: $color-primary-400;
-  --color-primary-500: $color-primary-500;
-  --color-primary-600: $color-primary-600;
-  --color-primary-700: $color-primary-700;
-  --color-primary-800: $color-primary-800;
-  --color-primary-900: $color-primary-900;
-  --color-primary-950: $color-primary-950;
+  // Light mode palette
+  --color-primary: #bd124b;
+  --color-background: #fefefe;
+  --color-foreground: #1b1b17;
+  --color-muted-foreground: #464646;
+  --color-card: #f3f3f1;
+  --color-highlight: #c60f6a;
+  
+  // Additional shades for interactive states
+  --color-primary-hover: #a80c59;
+  --color-primary-light: #fae9ee;
+  --color-code-bg: #2a2a27;
+  --color-code-fg: #f3f3f1;
+  --color-code-inline-bg: #e9e9e7;
+  --color-code-inline-fg: #2a2a27;
+}
 
-  --color-slate-50: $color-slate-50;
-  --color-slate-30: $color-slate-30;
-  --color-slate-100: $color-slate-100;
-  --color-slate-200: $color-slate-200;
-  --color-slate-300: $color-slate-300;
-  --color-slate-400: $color-slate-400;
-  --color-slate-500: $color-slate-500;
-  --color-slate-600: $color-slate-600;
-  --color-slate-700: $color-slate-700;
-  --color-slate-800: $color-slate-800;
-  --color-slate-900: $color-slate-900;
-  --color-slate-950: $color-slate-950;
+html.dark {
+  // Dark mode palette
+  --color-primary: #e94374;
+  --color-background: #0f0f0d;
+  --color-foreground: #f8f8f6;
+  --color-muted-foreground: #a8a8a6;
+  --color-card: #1b1b17;
+  --color-highlight: #f488c4;
+  
+  // Additional shades for interactive states
+  --color-primary-hover: #c60f6a;
+  --color-primary-light: #8a2257;
+  --color-code-bg: #2a2a27;
+  --color-code-fg: #f3f3f1;
+  --color-code-inline-bg: #2a2a27;
+  --color-code-inline-fg: #f3f3f1;
 }

@@ -1,29 +1,57 @@
 ---
-import {COPYRIGHT_NAME, GLOBAL_STYLE} from "../consts";
+import siteConfig from '../../content/site.json';
 import "@/styles/components.scss";
 import {clsx} from "clsx";
+
 const today = new Date();
+const COPYRIGHT_NAME = siteConfig.copyright_name;
 ---
 
 <footer
     id="footer-container"
     class={clsx(
-        "card",
-        GLOBAL_STYLE === 'glass' && 'glass',
-        GLOBAL_STYLE === 'lightGlass' && 'light-glass',
+      "card",
     )}
 >
-        &copy; {today.getFullYear()}&nbsp;{COPYRIGHT_NAME}. All rights reserved.<br>
-        Powered by <a class="link" href="https://github.com/koibumi-design/astro-blog">Koibumi Design</a>
+  <p>
+    &copy; {today.getFullYear()} by {COPYRIGHT_NAME}
+  </p>
+  <p>
+    Licensed under
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="link">CC BY-NC-SA 4.0</a>
+  </p>
+  <p>
+    The background image is from
+    <a href="https://www.pixiv.net/artworks/72467113" class="link only-light">Pixiv: 72467113</a>
+    <a href="https://www.pixiv.net/artworks/133357172" class="link only-dark">Pixiv: 133357172</a>
+  </p>
 </footer>
 
-<style>
-    #footer-container {
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-    }
+<style lang="scss">
+  #footer-container {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 
-    footer {
-        text-align: center;
+    * {
+      margin-bottom: 0;
     }
+  }
+
+  footer {
+    text-align: center;
+  }
+
+  .only-light {
+    display: inline;
+    html.dark & {
+      display: none;
+    }
+  }
+
+  .only-dark {
+    display: none;
+    html.dark & {
+      display: inline;
+    }
+  }
 </style>

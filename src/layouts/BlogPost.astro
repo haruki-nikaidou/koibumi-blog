@@ -1,34 +1,123 @@
 ---
-import type {CollectionEntry} from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import Card from '@/components/Card.astro';
-import {GLOBAL_STYLE} from "../consts";
-import "../styles/article.scss"
+import type {CollectionEntry} from "astro:content";
+import RootLayout from "./RootLayout.astro";
+import Card from "@/components/Card.astro";
+import "../styles/article.scss";
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<"blog">["data"];
 
-const {title, description} = Astro.props;
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  heroImage,
+  tags,
+  draft,
+} = Astro.props;
 ---
 
-<html lang="en">
-<head>
-    <BaseHead title={title} description={description}/>
-</head>
+<RootLayout
+  title={title}
+  description={description}
+  image={heroImage}
+>
+  <Card>
+    {
+      heroImage && (
+            <img
+                src={heroImage}
+                alt={title}
+                loading="lazy"
+                class="hero-image"
+            />
+      )
+    }
+    <article>
+      <h1 class="emphasize">
+        {title}
+      </h1>
+      <div class="meta">
+        {
+          draft && (
+                <p class="meta-text">
+                  <span class="tag">Draft</span>
+                </p>
+          )
+        }
+        <p class="meta-text">
+              <span>
+                Published:
+                {pubDate.toLocaleDateString()}
+              </span>
+          {
+            updatedDate && (
+                  <>
+                    <span>
+                      Updated:
+                      {updatedDate.toLocaleDateString()}
+                    </span>
+                  </>
+            )
+          }
+        </p>
+        {
+          tags && (
+                <p class="meta-text mini-tag-container">
+                  tags:
+                  {tags.map((tag) => (
+                      <a href={`/tag/${tag}`}>{tag}</a>
+                  ))}
+                </p>
+          )
+        }
+        <p class="description">
+          {description}
+        </p>
+      </div>
+      <hr/>
+      <slot/>
+    </article>
+  </Card>
+</RootLayout>
 
-<body>
-<Header/>
-<main>
-    <Card variant={GLOBAL_STYLE}>
-        <article>
-            <h1 class="emphasize">
-                {title}
-            </h1>
-            <slot/>
-        </article>
-    </Card>
-</main>
-<Footer/>
-</body>
-</html>
+<style lang="scss">
+  @use "@/styles/colors";
+
+  hr {
+    border: none;
+    background-color: var(--color-muted-foreground);
+    margin-block: 0;
+    height: 0.5px;
+    margin: 1rem 0;
+  }
+
+  .meta {
+    & > * {
+      margin-block: 0;
+    }
+
+    .meta-text {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.8rem;
+    }
+
+    .meta-text.mini-tag-container {
+      gap: 0.5rem;
+    }
+
+    .description {
+      font-size: 0.8rem;
+    }
+  }
+
+  .hero-image {
+    border-radius: 1rem;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 21/9;
+  }
+</style>

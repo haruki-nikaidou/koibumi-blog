@@ -1,0 +1,54 @@
+---
+import RootLayout from '@/layouts/RootLayout.astro';
+import siteConfig from '../../../content/site.json';
+import { getCollection } from 'astro:content';
+import Card from "../../components/Card.astro";
+
+const SITE_TITLE = siteConfig.title;
+const SITE_DESCRIPTION = siteConfig.description;
+
+const posts = (await getCollection('blog')).filter((post) => !post.data.draft);
+const tags = Array.from(new Set(posts.flatMap((post) => post.data.tags))).sort();
+---
+
+<RootLayout title={`Tags | ${SITE_TITLE}`} description={SITE_DESCRIPTION}>
+  <Card class="tags-card">
+    <h2>Tags</h2>
+    <ul class="tag-list">
+      {tags.map((tag) => (
+          <li><a class="tag" href={`/tag/${tag}`}>{tag}</a></li>
+      ))}
+    </ul>
+  </Card>
+</RootLayout>
+
+<style>
+  main {
+    max-width: 70rem;
+    margin: 3rem auto;
+    padding: 0 1rem;
+  }
+
+  .tags-card {
+      padding: 1rem;
+      width: 100%;
+  }
+
+  .tag-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 0.125rem 0.5rem;
+    border-radius: 5rem;
+    background-color: color-mix(in srgb, var(--color-card), transparent 30%);
+    color: var(--color-muted-foreground);
+    font-size: 0.75rem;
+    text-decoration: none;
+  }
+</style>
